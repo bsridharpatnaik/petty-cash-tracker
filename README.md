@@ -82,3 +82,7 @@ REACT_APP_BASE_URL=http://localhost:8080/api npm start
 ### Postman
 
 Import the collection and an environment from `Postman Collection/`, then set `servername`, `username` and `password` in the environment.
+
+## License
+
+[MIT](LICENSE)
