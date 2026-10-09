@@ -1,0 +1,398 @@
+.balance-card {
+  background-color: #1B2034;
+  padding: 20px;
+  color: #D1D4DB;
+  font-family: Arial, sans-serif;
+  width: 90vw;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.logo {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+}
+
+.user-info {
+  display: flex;
+  align-items: center;
+}
+
+.icons {
+  display: flex;
+  align-items: center;
+}
+
+.search-icon, .frame-icon ,.menu-icon {
+  font-size: 16px;
+  cursor: pointer;
+  margin-left: 15px;
+}
+
+.balance-info {
+  margin-top: 20px;
+  display:flex;
+  justify-content: space-between;
+}
+
+.balance-info p {
+  margin: 0;
+  font-size: 14px;
+}
+
+.balance-info h2 {
+  margin: 5px 0;
+  font-size: 24px;
+  color: #fff;
+}
+
+.toggle-group {
+  display: flex;
+  margin-top: 10px;
+}
+
+.toggle-btn {
+  border-radius: 20px;
+  margin-right: 10px;
+  cursor: pointer;
+  height:40px;
+  width:40px;
+  border-radius: 50%;
+  background-color: #4B4F63;
+  color: #D1D4DB;
+  display :flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.toggle-btn.selected {
+  background-color: #FFED00;
+  color: #1B2034;
+}
+
+.date-selector {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 20px;
+}
+
+.date-selector p {
+  margin: 0;
+  font-size: 16px;
+}
+
+.prev-date, .next-date {
+  background-color: #4B4F63;
+  color: #D1D4DB;
+  border: none;
+  border-radius: 5px;
+  padding: 8px 12px;
+  cursor: pointer;
+}
+
+/* DatePicker Custom Styles */
+.react-datepicker-wrapper {
+  width: auto;
+  margin-left: 60px;
+}
+
+.react-datepicker {
+  background-color: #2e2e3d;
+  border: none;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  color: #D1D4DB;
+}
+
+.react-datepicker__header {
+  background-color: #4B4F63;
+  border-bottom: none;
+}
+
+.react-datepicker__current-month,
+.react-datepicker__day-name {
+  color: #D1D4DB;
+}
+
+.react-datepicker__day {
+  color: #D1D4DB;
+  background-color: #2e2e3d;
+}
+
+.react-datepicker__day:hover {
+  background-color: #4B4F63;
+}
+
+.react-datepicker__day--selected {
+  background-color: #FFED00;
+  color: #1B2034;
+}
+
+.date-display {
+  margin: 0 10px;
+  padding: 5px 15px;
+  border-radius: 20px;
+  background-color: #4B4F63;
+  color: #D1D4DB;
+  font-size: 16px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  padding: 10px;
+}
+input:not([type="image" i], [type="range" i], [type="checkbox" i], [type="radio" i]) {
+  background: none;
+    border: none;
+    color: #fff;
+}
+
+.transaction-history {
+  margin-top: 20px;
+}
+
+.transaction-history h4 {
+  font-size: 18px;
+  color: #181D31;
+  font-weight: 600;
+ padding: 0 0 0 17px;
+}
+.c-f {
+  display: flex;
+  justify-content: space-between;
+  background-color: #DCDFE6;
+  padding: 10px 20px;
+  font-size: 14px;
+  font-weight: 600;
+  color: #181D31;
+}
+
+.summary {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 15px;
+  padding: 10px;
+}
+
+.summary-item {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  text-align: center;
+  gap:5px;
+  padding: 10px;
+}
+
+.summary-icon {
+  width: 44px;
+  height: 50px;
+  margin-bottom: 5px;
+  background-color: #E1FBD8;
+  border-radius: 10px;
+}
+.summary-icon-ex {
+  width: 44px;
+  height: 50px;
+  margin-bottom: 5px;
+  background-color: #FFD3D1;
+  border-radius: 10px;
+
+}
+.summary-item p {
+  margin: 5px 0;
+  font-size: 14px;
+  color: #888;
+}
+
+.summary-item h3 {
+  margin: 0;
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.amount.positive {
+  color: #28A745;
+}
+
+.amount.negative {
+  color: #DC3545;
+}
+
+.text{
+  display: flex;
+  flex-direction: column;
+  gap:2px;
+  font-size:12px;
+  margin-bottom:10px !important
+}
+.dots-container{
+  position: relative;
+}
+/* Search container styling */
+.search-input-container {
+  position: relative;
+  display: flex;
+  align-items: center;
+  transition: width 0.4s ease;
+}
+
+.search-input-container.active {
+  width: 200px; /* Expand when active */
+}
+
+.search-input {
+  width: 100%;
+  padding: 10px 40px 10px 15px;
+  background: none;
+  border: 1px solid #D1D4DB;
+  border-radius: 20px;
+  color: #fff;
+  outline: none;
+  font-size: 14px;
+}
+
+.search-input::placeholder {
+  color: #888;
+}
+
+/* Icon inside input */
+.search-icon-input {
+  position: absolute;
+  right: 10px;
+  font-size: 16px;
+  color: #D1D4DB;
+  cursor: pointer;
+}
+
+/* Search icon when collapsed */
+.search-icon {
+  font-size: 16px;
+  cursor: pointer;
+  margin-left: 15px;
+}
+
+.search-input-container {
+  position: relative;
+}
+.options-list {
+  position: absolute;
+  background-color: white;
+  border: 1px solid #ccc;
+  width: 100%;
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+.options-list li {
+  padding: 8px;
+  cursor: pointer;
+}
+.options-list li.selected {
+  background-color: #f0f0f0;
+}
+
+/* Container for the search input and dropdown */
+.search-input-container {
+  position: relative;
+  display: flex;
+  align-items: center;
+  transition: width 0.4s ease;
+}
+
+.search-input-container.active {
+  width: 200px; /* Expand when active */
+}
+
+.search-input {
+  width: 100%;
+  padding: 10px 40px 10px 15px;
+  background: none;
+  border: 1px solid #D1D4DB;
+  border-radius: 20px;
+  color: #fff;
+  outline: none;
+  font-size: 14px;
+}
+
+.search-input::placeholder {
+  color: #888;
+}
+
+/* Options list styling */
+.options-list {
+  position: absolute;
+  top: 40px;
+  background-color: white; /* Yellow background */
+  border: 1px solid #D1D4DB;
+  width: 100%;
+  max-height: 200px;
+  overflow-y: auto;
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+  border-radius: 8px;
+  z-index: 100;
+}
+
+.options-list li {
+  padding: 10px;
+  font-size: 14px;
+  color: #1B2034; /* Dark text */
+  cursor: pointer;
+}
+
+.options-list li:hover {
+  background-color: white; /* Lighter yellow on hover */
+}
+
+.options-list li.selected {
+  background-color: white; /* Darker yellow for selected item */
+  font-weight: bold;
+}
+
+/* Icon inside the input */
+.search-icon-input {
+  position: absolute;
+  right: 10px;
+  font-size: 16px;
+  color: #D1D4DB;
+  cursor: pointer;
+}
+
+/* Search icon when collapsed */
+.search-icon {
+  font-size: 16px;
+  cursor: pointer;
+  margin-left: 15px;
+}
+
+.custom-date-filter {
+  display: flex;
+  gap: 30px;
+  align-items: center;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+.date-input label {
+  display: flex;
+  flex-direction: column;
+  color: #D1D4DB;
+  font-size: 12px;
+  margin-bottom: 5px;
+}
+
+.date-input input {
+  padding: 8px;
+  border-radius: 5px;
+  border: none;
+  background-color: #4B4F63;
+  color: #D1D4DB;
+  width: 100%;
+}

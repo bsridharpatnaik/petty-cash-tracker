@@ -1,0 +1,17 @@
+.add-button {
+    width: 48px;
+    height: 48px;
+    background-color: #489C2C;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+}
+
+.add-button .plus-icon {
+    font-size: 24px;
+    color: #fff;
+    background-color: #489C2C;
+    border: none;
+}

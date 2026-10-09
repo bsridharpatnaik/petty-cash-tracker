@@ -1,0 +1,116 @@
+/target/
+/Backend/target
+/Backend/target
+/Backend/target
+
+# Flutter/Dart/Pub related
+.dart_tool/
+.packages
+.pub-cache/
+build/
+.flutter-plugins
+.flutter-plugins-dependencies
+.melos_tool/
+
+# Flutter specific
+flutter_*.png
+generated_plugin_registrant.dart
+
+# Android
+android/.gradle/
+android/.idea/
+android/.cxx/
+android/local.properties
+android/app/debug
+android/app/profile
+android/app/release
+*.iml
+
+# iOS
+ios/.generated/
+ios/.symlinks/
+ios/Pods/
+ios/Runner.xcworkspace/
+ios/Flutter/Flutter.framework
+ios/Flutter/Flutter.podspec
+ios/Flutter/Generated.xcconfig
+ios/Flutter/ephemeral/
+ios/.dart_tool/
+ios/Podfile.lock
+
+# macOS
+macos/Flutter/ephemeral/
+macos/Flutter/GeneratedPluginRegistrant.swift
+macos/Pods/
+macos/Podfile.lock
+macos/Runner.xcworkspace/
+
+# Linux
+linux/flutter/ephemeral/
+linux/CMakeFiles/
+linux/Makefile
+linux/cmake-build-debug/
+
+# Windows
+windows/flutter/ephemeral/
+windows/GeneratedPluginRegistrant.*
+windows/CMakeFiles/
+windows/Makefile
+windows/cmake-build-debug/
+
+# Web
+web/GeneratedPluginRegistrant.dart
+
+# VS Code
+.vscode/
+*.code-workspace
+
+# IntelliJ/Android Studio
+.idea/
+*.iml
+*.ipr
+*.iws
+*.sw?
+
+# Misc
+*.lock
+*.log
+pubspec.lock
+*.DS_Store
+*.class
+*.pyc
+*.pyo
+*.swo
+*.swp
+*.tmp
+
+# Coverage
+coverage/
+
+# Firebase crashlytics
+crashlytics-build.properties
+
+# Fastlane
+fastlane/report.xml
+fastlane/Preview.html
+fastlane/screenshots
+
+# Environment
+.env
+.env.*
+# Build outputs (anywhere in the repo)
+**/target/
+**/build/
+**/.cxx/
+**/node_modules/
+*.war
+*.apk
+*.aab
+
+# Secrets / local config
+local.properties
+key.properties
+*.jks
+*.keystore
+google-services.json
+GoogleService-Info.plist

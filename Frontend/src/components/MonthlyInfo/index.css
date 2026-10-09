@@ -1,0 +1,49 @@
+.transaction-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+}
+
+.transaction-item .text_ {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.transaction-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.transaction-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: #F3F3F3;
+    padding: 10px;
+}
+
+.transaction-list {
+    max-height: 235px;  /* Set a max height */
+    overflow-y: auto;   /* Enable vertical scrolling */
+    padding-right: 5px; /* Add some padding for better scroll visibility */
+}
+
+/* Optional styling to customize the scrollbar */
+.transaction-list::-webkit-scrollbar {
+   display: none;
+}
+
+
+.transaction-balance{
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 10px;
+}
+.green {
+    color: #34C759;
+}
+.red {
+    color:#FF3B30
+}

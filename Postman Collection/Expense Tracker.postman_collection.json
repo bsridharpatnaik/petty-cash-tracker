@@ -1,0 +1,831 @@
+{
+	"info": {
+		"_postman_id": "96a3bc7f-f288-447e-b187-2f15bbf2107b",
+		"name": "Expense Tracker",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "User",
+			"item": [
+				{
+					"name": "Login",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonData = JSON.parse(responseBody);",
+									"postman.setEnvironmentVariable(\"token\", jsonData.token);"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"username\":\"{{username}}\",\n    \"password\":\"{{password}}\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{servername}}/api/auth/login",
+							"host": [
+								"{{servername}}"
+							],
+							"path": [
+								"api",
+								"auth",
+								"login"
+							]
+						},
+						"description": "Generated from cURL: curl -X POST -d \"username=<username>\" -d \"password=<password>\" http://localhost:8095/login -c cookies.txt\n"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "File Handling - Transaction",
+			"item": [
+				{
+					"name": "Upload File",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonData = JSON.parse(responseBody);",
+									"postman.setEnvironmentVariable(\"fileUuid\", jsonData.fileUuid);",
+									"postman.setEnvironmentVariable(\"filename\", jsonData.filename);",
+									"postman.setEnvironmentVariable(\"uploadDate\", jsonData.uploadDate);"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "file",
+									"type": "file",
+									"src": ""
+								}
+							]
+						},
+						"url": {
+							"raw": "{{servername}}/api/file/upload",
+							"host": [
+								"{{servername}}"
+							],
+							"path": [
+								"api",
+								"file",
+								"upload"
+							],
+							"query": [
+								{
+									"key": "file",
+									"value": null,
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "DownloadFile",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{acces",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{servername}}/api/file/download/{{fileUuid}}",
+							"host": [
+								"{{servername}}"
+							],
+							"path": [
+								"api",
+								"file",
+								"download",
+								"{{fileUuid}}"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Transaction",
+			"item": [
+				{
+					"name": "Party List",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{party}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{servername}}/api/transaction/party",
+							"host": [
+								"{{servername}}"
+							],
+							"path": [
+								"api",
+								"transaction",
+								"party"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonData = JSON.parse(responseBody);",
+									"postman.setEnvironmentVariable(\"txId\", jsonData.id);"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"// Define the range of days (last 60 days)",
+									"const daysAgoStart = 60;",
+									"const daysAgoEnd = 1;",
+									"",
+									"// Generate a random number of days between 1 and 60",
+									"const randomDaysAgo = Math.floor(Math.random() * (daysAgoEnd - daysAgoStart + 1)) + daysAgoStart;",
+									"",
+									"// Calculate the date",
+									"const date = new Date();",
+									"date.setDate(date.getDate() - randomDaysAgo);",
+									"",
+									"// Format the date in dd-MM-yyyy format",
+									"const formattedDate = (\"0\" + date.getDate()).slice(-2) + \"-\" + (\"0\" + (date.getMonth() + 1)).slice(-2) + \"-\" + date.getFullYear();",
+									"",
+									"// Randomly choose between INCOME and EXPENSE",
+									"const transactionTypes = [\"INCOME\", \"EXPENSE\"];",
+									"const randomTypeIndex = Math.floor(Math.random() * transactionTypes.length);",
+									"const randomTransactionType = transactionTypes[randomTypeIndex];",
+									"",
+									"// Set the variable for date",
+									"pm.environment.set(\"randomDate\", formattedDate);",
+									"",
+									"// Set the variable for transaction type",
+									"pm.environment.set(\"randomTransactionType\", randomTransactionType);",
+									"",
+									"// Generate a random number between 10 and 1000",
+									"var randomNumber = Math.floor(Math.random() * (1000 - 10 + 1)) + 10;",
+									"",
+									"// Set the random number as an environment variable",
+									"pm.environment.set(\"randomNumber\", randomNumber);",
+									"",
+									"// Log the random number to the console (optional)",
+									"console.log(\"Generated Random Number: \" + randomNumber);"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"transactionType\": \"{{randomTransactionType}}\", // possible values are INCOME/EXPENSE\n    \"date\": \"{{randomDate}}\",\n    \"title\": \"Sample Transaction\",\n    \"party\": \"{{$randomFullName}}\",\n    \"amount\": {{randomNumber}},\n    \"description\":\"{{$randomAbbreviation}}\",\n    \"files\": [\n        {\n            \"fileUuid\": \"{{fileUuid}}\"\n        }\n    ]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{servername}}/api/transaction",
+							"host": [
+								"{{servername}}"
+							],
+							"path": [
+								"api",
+								"transaction"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    // \"transactionType\":\"EXPENSE\",\n    //\"date\": \"24-08-2024\",\n    //\"title\": \"Sample Transaction1\",\n    //\"party\": \"Sample Party\",\n    //\"amount\": 112.56,\n    /*\"files\": [\n        {\n            \"fileUuid\": \"{{fileUuid}}\"\n        }\n    ]*/\n    \"description\":\"{{$randomBankAccountName}}\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{servername}}/api/transaction/{{txId}}",
+							"host": [
+								"{{servername}}"
+							],
+							"path": [
+								"api",
+								"transaction",
+								"{{txId}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{servername}}/api/transaction/{{txId}}",
+							"host": [
+								"{{servername}}"
+							],
+							"path": [
+								"api",
+								"transaction",
+								"{{txId}}"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Dashboard",
+			"item": [
+				{
+					"name": "Fetch Daily",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{servername}}/api/dashboard/summary?dateOrMonth=2024-10",
+							"host": [
+								"{{servername}}"
+							],
+							"path": [
+								"api",
+								"dashboard",
+								"summary"
+							],
+							"query": [
+								{
+									"key": "dateOrMonth",
+									"value": "2024-10"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Fetch Monthly",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{servername}}/api/dashboard/summary?dateOrMonth=2024-10",
+							"host": [
+								"{{servername}}"
+							],
+							"path": [
+								"api",
+								"dashboard",
+								"summary"
+							],
+							"query": [
+								{
+									"key": "dateOrMonth",
+									"value": "2024-10"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Fetch Monthly Grouped",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{servername}}/api/dashboard/summary/grouped?startDate=2024-10",
+							"host": [
+								"{{servername}}"
+							],
+							"path": [
+								"api",
+								"dashboard",
+								"summary",
+								"grouped"
+							],
+							"query": [
+								{
+									"key": "startDate",
+									"value": "2024-10"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Vault V2",
+			"item": [
+				{
+					"name": "Get Root folder content",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonData = JSON.parse(responseBody);",
+									"postman.setEnvironmentVariable(\"rootId\", jsonData.id);"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{servername}}/api/vault/folders",
+							"host": [
+								"{{servername}}"
+							],
+							"path": [
+								"api",
+								"vault",
+								"folders"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Folder",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonData = JSON.parse(responseBody);",
+									"postman.setEnvironmentVariable(\"folderId\", jsonData.id);"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{servername}}/api/vault/folders?name={{$randomCity}}&parentId={{rootId}}",
+							"host": [
+								"{{servername}}"
+							],
+							"path": [
+								"api",
+								"vault",
+								"folders"
+							],
+							"query": [
+								{
+									"key": "name",
+									"value": "{{$randomCity}}"
+								},
+								{
+									"key": "parentId",
+									"value": "{{rootId}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Upload File to Folder",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonData = JSON.parse(responseBody);",
+									"postman.setEnvironmentVariable(\"fileId\", jsonData.id);"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "file",
+									"type": "file",
+									"src": ""
+								},
+								{
+									"key": "folderId",
+									"value": "{{folderId}}",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{servername}}/api/vault/files",
+							"host": [
+								"{{servername}}"
+							],
+							"path": [
+								"api",
+								"vault",
+								"files"
+							]
+						},
+						"description": "Generated from cURL: curl -X POST \"http://localhost:8080/api/vault/files\" \\\n     -F \"file=@/path/to/your/file.txt\" \\\n     -F \"folderId=123\"\n"
+					},
+					"response": []
+				},
+				{
+					"name": "Download File",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{servername}}/api/vault/files/download/{{fileId}}",
+							"host": [
+								"{{servername}}"
+							],
+							"path": [
+								"api",
+								"vault",
+								"files",
+								"download",
+								"{{fileId}}"
+							]
+						},
+						"description": "Generated from cURL: curl -X POST \"http://localhost:8080/api/vault/files\" \\\n     -F \"file=@/path/to/your/file.txt\" \\\n     -F \"folderId=123\"\n"
+					},
+					"response": []
+				},
+				{
+					"name": "Get Folder Content",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{servername}}/api/vault/folders?folderId={{folderId}}",
+							"host": [
+								"{{servername}}"
+							],
+							"path": [
+								"api",
+								"vault",
+								"folders"
+							],
+							"query": [
+								{
+									"key": "folderId",
+									"value": "{{folderId}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete FIle",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{servername}}/api/vault/files/{{fileId}}",
+							"host": [
+								"{{servername}}"
+							],
+							"path": [
+								"api",
+								"vault",
+								"files",
+								"{{fileId}}"
+							]
+						},
+						"description": "Generated from cURL: curl -X POST \"http://localhost:8080/api/vault/files\" \\\n     -F \"file=@/path/to/your/file.txt\" \\\n     -F \"folderId=123\"\n"
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Folder",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{servername}}/api/vault/folders/{{folderId}}",
+							"host": [
+								"{{servername}}"
+							],
+							"path": [
+								"api",
+								"vault",
+								"folders",
+								"{{folderId}}"
+							]
+						},
+						"description": "Generated from cURL: curl -X POST \"http://localhost:8080/api/vault/files\" \\\n     -F \"file=@/path/to/your/file.txt\" \\\n     -F \"folderId=123\"\n"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "History",
+			"item": [
+				{
+					"name": "Get History",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{servername}}/api/history",
+							"host": [
+								"{{servername}}"
+							],
+							"path": [
+								"api",
+								"history"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Bulk Add Transactions",
+			"item": [
+				{
+					"name": "Create Copy",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonData = JSON.parse(responseBody);",
+									"postman.setEnvironmentVariable(\"txId\", jsonData.id);"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"// Define the range of days (last 60 days)",
+									"const daysAgoStart = 3;",
+									"const daysAgoEnd = 0;",
+									"",
+									"// Generate a random number of days between 1 and 60",
+									"const randomDaysAgo = Math.floor(Math.random() * (daysAgoEnd - daysAgoStart + 1)) + daysAgoStart;",
+									"",
+									"// Calculate the date",
+									"const date = new Date();",
+									"date.setDate(date.getDate() - randomDaysAgo);",
+									"",
+									"// Format the date in dd-MM-yyyy format",
+									"const formattedDate = (\"0\" + date.getDate()).slice(-2) + \"-\" + (\"0\" + (date.getMonth() + 1)).slice(-2) + \"-\" + date.getFullYear();",
+									"",
+									"// Randomly choose between INCOME and EXPENSE",
+									"const transactionTypes = [\"INCOME\", \"EXPENSE\"];",
+									"const randomTypeIndex = Math.floor(Math.random() * transactionTypes.length);",
+									"const randomTransactionType = transactionTypes[randomTypeIndex];",
+									"",
+									"// Set the variable for date",
+									"pm.environment.set(\"randomDate\", formattedDate);",
+									"",
+									"// Set the variable for transaction type",
+									"pm.environment.set(\"randomTransactionType\", randomTransactionType);",
+									"",
+									"var randomNumber = Math.floor(Math.random() * (1000 - 10 + 1)) + 10;",
+									"",
+									"// Set the random number as an environment variable",
+									"pm.environment.set(\"randomNumber\", randomNumber);",
+									"",
+									"// Log the random number to the console (optional)",
+									"console.log(\"Generated Random Number: \" + randomNumber);",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"transactionType\": \"{{randomTransactionType}}\", // possible values are INCOME/EXPENSE\n    \"date\": \"{{randomDate}}\",\n    \"title\": \"{{$randomBsNoun}}\",\n    \"party\": \"{{$randomFullName}}\",\n    \"amount\": {{randomNumber}},\n    \"files\": [\n        {\n            \"fileUuid\": \"{{fileUuid}}\"\n        }\n    ]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{servername}}/api/transaction",
+							"host": [
+								"{{servername}}"
+							],
+							"path": [
+								"api",
+								"transaction"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					"if (pm.environment.get(\"authEnabled\") === \"true\") {",
+					"    pm.sendRequest({",
+					"        url: pm.environment.get(\"servername\") + '/api/auth/login',  // Use servername variable",
+					"        method: 'POST',",
+					"        header: {",
+					"            'Content-Type': 'application/json'",
+					"        },",
+					"        body: {",
+					"            mode: 'raw',",
+					"            raw: JSON.stringify({",
+					"                username: pm.environment.get('username'),",
+					"                password: pm.environment.get('password')",
+					"            })",
+					"        }",
+					"    }, function (err, res) {",
+					"        if (err) {",
+					"            console.log(err);",
+					"        } else {",
+					"            // Extract token from response and set it as environment variable",
+					"            var jsonData = res.json();",
+					"            var token = jsonData.token;",
+					"            if (token) {",
+					"                pm.environment.set(\"token\", token);",
+					"            } else {",
+					"                console.log('Token not found in the response');",
+					"            }",
+					"        }",
+					"    });",
+					"} else {",
+					"    pm.environment.unset(\"token\");  // Unset token if auth is disabled",
+					"    ",
+					"}",
+					"",
+					"if (pm.environment.get(\"authEnabled\") === \"true\") {",
+					"    // Add the Authorization header",
+					"    pm.request.headers.add({",
+					"        key: \"Authorization\",",
+					"        value: \"Bearer {{token}}\"",
+					"    });",
+					"} else {",
+					"    // Remove the Authorization header if present",
+					"    pm.request.headers.remove(\"Authorization\");",
+					"}"
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	]
+}

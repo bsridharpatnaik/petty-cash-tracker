@@ -1,0 +1,74 @@
+
+  .transaction-icon-folder {
+    min-width: 52px;
+    height: 50px;
+    border-radius: 10%;
+    background-color: #E1E4E8;
+    color: #555;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 18px;
+    font-weight: 600;
+    margin-right: 15px;
+  }
+  .transaction-amount {
+    font-size: 16px;
+    font-weight: 700;
+  }
+  
+  .transaction-amount.positive {
+    color: #28A745;
+  }
+  
+  .transaction-amount.negative {
+    color: #DC3545;
+  }
+  
+.transaction-details {
+    flex-grow: 1;
+    width:10px
+  }
+  .transaction-details span {
+   font-weight: 400;
+   color: #181D31;
+   font-size: 15px;
+  }
+  .transaction-details p {
+    margin: 0;
+    font-size: 14px;
+    color: #333;
+  }
+
+.transaction-time {
+    font-size: 12px;
+    color: #999;
+    margin-left: 10px;
+  }
+
+.transaction-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 12px 20px;
+    background-color: #F7F9FC;
+    border-radius: 10px;
+    margin-bottom: 10px;
+  }
+.frame-icon {
+    font-size: 16px;
+    cursor: pointer;
+    margin-left: 15px;
+    color: #181D31;
+  }
+  .dots-container_folder{
+    position:relative;
+    height:40px;
+    margin-left: 10px;
+    border-radius: 20px;
+    width:40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #FF3B30;
+  }
